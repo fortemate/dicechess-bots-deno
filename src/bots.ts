@@ -22,6 +22,12 @@ export interface Bot {
 export const BOTS: readonly Bot[] = [
   { route: 'greedy', identity: 'cloudflare/greedy', algorithm: 'greedy', secretEnv: 'GREEDY_WEBHOOK_SECRET' },
   { route: 'random', identity: 'anchor/random', algorithm: 'random', secretEnv: 'RANDOM_WEBHOOK_SECRET' },
+  {
+    route: 'aggressive',
+    identity: 'anchor/aggressive',
+    algorithm: 'aggressive',
+    secretEnv: 'AGGRESSIVE_WEBHOOK_SECRET',
+  },
 ];
 
 export const byRoute = (path: string): Bot | undefined =>

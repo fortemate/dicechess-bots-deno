@@ -21,7 +21,7 @@
 ## Developer Workflows
 
 - **Setup**: `deno --version` (Deno 2.x; dependencies resolve from `deno.json`).
-- **Tests**: `deno task test` (8 tests: roster wiring, routing, behaviour pin, cross-route signature
+- **Tests**: `deno task test` (10 tests: roster wiring, routing, behaviour pin, cross-route signature
   isolation, HMAC, replay window).
 - **Check**: `deno task check` (`deno check`, `deno fmt --check`, `deno lint`).
 - **Dev**: `GREEDY_WEBHOOK_SECRET=… RANDOM_WEBHOOK_SECRET=… deno task dev` (serves on :8000).
