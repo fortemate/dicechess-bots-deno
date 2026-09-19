@@ -47,7 +47,7 @@ scale needs, but only the unique-best case can be pinned.
 
 ## Adding an anchor
 
-1. One entry in `BOTS` (`src/bots.ts`) — route, identity, algorithm, secret variable.
+1. One entry in `BOTS` (`src/bots.ts`) — route, identity, a **built-in** algorithm, secret variable.
 2. One environment variable on the Production timeline.
 3. `POST /bot/webhook` with `https://<app>.deno.net/<route>`; store the returned secret.
 
@@ -56,13 +56,13 @@ Do **not** create another Deno Deploy application: that is the cost this reposit
 ## Running it locally
 
 ```bash
-GREEDY_WEBHOOK_SECRET=gk RANDOM_WEBHOOK_SECRET=rk deno task dev
+GREEDY_WEBHOOK_SECRET=gk RANDOM_WEBHOOK_SECRET=rk AGGRESSIVE_WEBHOOK_SECRET=ak deno task dev
 ```
 
 ```bash
 curl -s localhost:8000          # lists the roster
 curl -s localhost:8000/greedy   # {"status":"ok","bot":"cloudflare/greedy","algorithm":"greedy"}
-deno task test                  # 8 tests
+deno task test                  # 10 tests
 deno task check                 # type check, fmt, lint
 ```
 
