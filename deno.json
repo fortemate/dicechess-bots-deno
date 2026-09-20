@@ -8,7 +8,7 @@
     "test": "deno test --allow-net --allow-env"
   },
   "imports": {
-    "@fortemate/dicechess-engine": "npm:@fortemate/dicechess-engine@^0.12.0",
+    "@fortemate/dicechess-engine": "npm:@fortemate/dicechess-engine@0.12.0",
     "@std/assert": "jsr:@std/assert@^1"
   },
   "fmt": { "lineWidth": 110, "singleQuote": true },
