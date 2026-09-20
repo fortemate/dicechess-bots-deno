@@ -24,6 +24,11 @@ retrained — nothing a faster engine or a growing book could silently strengthe
 identities be fixed points the rest of the ladder is read against, and `src/bots_test.ts` asserts it: every
 `algorithm` in the roster must be one the engine ships.
 
+The engine dependency is pinned to an exact release in `deno.json` and its package integrity is recorded in
+`deno.lock`. These algorithms do not use a time budget, so running the same engine faster does not change
+their play. An engine update can still change move selection through code changes and therefore requires an
+explicit anchor-replacement decision instead of an automatic dependency bump.
+
 ## Why one application and not one per bot
 
 Deno Deploy bills **Memory Time** as provisioned memory × every second the _application_ is loaded in memory —
