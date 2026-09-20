@@ -25,9 +25,9 @@ identities be fixed points the rest of the ladder is read against, and `src/bots
 `algorithm` in the roster must be one the engine ships.
 
 The engine dependency is pinned to an exact release in `deno.json` and its package integrity is recorded in
-`deno.lock`. These algorithms do not use a time budget, so running the same engine faster does not change their
-play. An engine update can still change move selection through code changes and therefore requires an explicit
-anchor-replacement decision instead of an automatic dependency bump.
+`deno.lock`. These algorithms do not use a time budget, so running the same engine faster does not change
+their play. An engine update can still change move selection through code changes and therefore requires an
+explicit anchor-replacement decision instead of an automatic dependency bump.
 
 ## Why one application and not one per bot
 
