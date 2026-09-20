@@ -7,21 +7,39 @@
 
 One application hosting the fixed rating anchors that run on Deno Deploy, each on its own path.
 
-| Path      | Identity            | Algorithm         | Role in the scale                |
-| --------- | ------------------- | ----------------- | -------------------------------- |
-| `/greedy` | `cloudflare/greedy` | built-in `greedy` | base greedy material evaluation  |
-| `/random` | `anchor/random`     | built-in `random` | lower horizon of admissible play |
+| Path          | Identity            | Algorithm             | Expected level | Role in the scale                    |
+| ------------- | ------------------- | --------------------- | -------------: | ------------------------------------ |
+| `/random`     | `anchor/random`     | built-in `random`     |         ≈ −610 | lower horizon of admissible play     |
+| `/greedy`     | `cloudflare/greedy` | built-in `greedy`     |         ≈ −125 | base greedy material evaluation      |
+| `/aggressive` | `anchor/aggressive` | built-in `aggressive` |          ≈ −35 | attacking heuristic, no opening book |
+
+Three of the four members of `Anchor Set v1.0` live here. The fourth, `rabestro/java-baseline`, is a separate
+ONNX bot hosted elsewhere. `cloudflare/greedy` keeps its team name although the specification calls it
+`anchor/greedy`: renaming would create a new identity and discard its game history.
+
+### Everything here is a built-in engine algorithm
+
+That is the rule, not a coincidence. No opening book, no clock-budgeted search, no weights that can be
+retrained — nothing a faster engine or a growing book could silently strengthen. It is what lets these
+identities be fixed points the rest of the ladder is read against, and `src/bots_test.ts` asserts it: every
+`algorithm` in the roster must be one the engine ships.
 
 ## Why one application and not one per bot
 
 Deno Deploy bills **Memory Time** as provisioned memory × every second the _application_ is loaded in memory —
-not memory actually used, and not CPU. Measured over four hours with both anchors on the ladder: 1.7 GiB·h
-consumed, isolates resident about 39 % of the time. Projected to a month that is ~285 GiB·h for two separate
-apps against a free-plan allowance of **350 GiB·h**, and exceeding the allowance **pauses the application
-until the next billing cycle** rather than billing for it.
+not memory actually used, and not CPU. The free-plan allowance is **350 GiB·h**, and exceeding it **pauses the
+application until the next billing cycle** rather than billing for it.
 
-Collapsing them into one application halves that, because the meter counts applications rather than
-identities. It also makes the next anchor nearly free instead of adding another ~140 GiB·h.
+The meter counts applications, not identities, so one app per bot multiplies the bill for nothing. At the
+platform-minimum 512 MiB an application resident round the clock costs 0.5 × 730 = 365 GiB·h, slightly over
+the whole allowance — which makes residency, not traffic, the number to watch.
+
+Measured here over 14.6 hours with three bots on the ladder: **0.46 GiB·h per hour, ~92 % residency,
+projecting to ~335 GiB·h a month — 96 % of the allowance.** Note what that corrects: an earlier reading with
+one and two bots showed 39 % residency, and projecting _that_ onto the merged app was wrong. Residency is the
+**union** of every bot's activity, so adding identities to one application pushes it toward 100 % rather than
+leaving it flat. Consolidating still halves the cost of an hour; it does not stop more bots from buying more
+hours.
 
 ## Each identity keeps its own secret
 
@@ -29,10 +47,11 @@ identities. It also makes the next anchor nearly free instead of adding another 
 key would let a delivery meant for one anchor be replayed against another, which is exactly what
 `src/bots_test.ts` pins with a cross-route test.
 
-| Identity            | Environment variable    |
-| ------------------- | ----------------------- |
-| `cloudflare/greedy` | `GREEDY_WEBHOOK_SECRET` |
-| `anchor/random`     | `RANDOM_WEBHOOK_SECRET` |
+| Identity            | Environment variable        |
+| ------------------- | --------------------------- |
+| `anchor/random`     | `RANDOM_WEBHOOK_SECRET`     |
+| `cloudflare/greedy` | `GREEDY_WEBHOOK_SECRET`     |
+| `anchor/aggressive` | `AGGRESSIVE_WEBHOOK_SECRET` |
 
 ## The one rule
 

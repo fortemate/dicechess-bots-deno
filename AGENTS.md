@@ -3,7 +3,8 @@
 ## Architecture Overview
 
 - **Domain**: one Deno Deploy application serving SEVERAL Dice Chess ladder anchors, each on its own path
-  (`/greedy` → `cloudflare/greedy`, `/random` → `anchor/random`).
+  (`/random` → `anchor/random`, `/greedy` → `cloudflare/greedy`, `/aggressive` → `anchor/aggressive`) — three
+  of the four members of `Anchor Set v1.0`.
 - **Why one app**: Deno Deploy's Memory Time meter bills provisioned memory for every second an _application_
   is loaded, regardless of how many identities it serves. Two separate apps at 512 MiB, resident ~39% of the
   time, project to ~285 GiB-h/month against the free plan's 350; a third would not fit. Collapsed into one app
