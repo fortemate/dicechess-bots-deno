@@ -3,7 +3,7 @@
   "specifiers": {
     "jsr:@std/assert@1": "1.0.19",
     "jsr:@std/internal@^1.0.12": "1.0.14",
-    "npm:@fortemate/dicechess-engine@0.12": "0.12.0"
+    "npm:@fortemate/dicechess-engine@0.12.2": "0.12.2"
   },
   "jsr": {
     "@std/assert@1.0.19": {
@@ -17,14 +17,14 @@
     }
   },
   "npm": {
-    "@fortemate/dicechess-engine@0.12.0": {
-      "integrity": "sha512-pjvDSd4LxMjCWA2UbrSQ9XJIpVG/oFvB2oX8wbrjSuNsvFb4eBD2DCMO7sVVu78HoiNmRhcbI/uG46B/DgmMFg=="
+    "@fortemate/dicechess-engine@0.12.2": {
+      "integrity": "sha512-yWwGvKrmzqvwJ1S1v+Y5RhawSsPcfFkbrMux+dbzM28EvZ2I0Crx7CFxprSGxuw7LWiNHW1pgx/XGJ/AGr2qzA=="
     }
   },
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
-      "npm:@fortemate/dicechess-engine@0.12"
+      "npm:@fortemate/dicechess-engine@0.12.2"
     ]
   }
 }
