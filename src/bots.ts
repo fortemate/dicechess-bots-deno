@@ -30,8 +30,14 @@ export const BOTS: readonly Bot[] = [
   },
 ];
 
-export const byRoute = (path: string): Bot | undefined =>
-  BOTS.find((b) => b.route === path.replace(/^\/+/, '').replace(/\/+$/, ''));
+export const byRoute = (path: string): Bot | undefined => {
+  let start = 0;
+  let end = path.length;
+  while (start < end && path[start] === '/') start++;
+  while (end > start && path[end - 1] === '/') end--;
+  const route = path.slice(start, end);
+  return BOTS.find((b) => b.route === route);
+};
 
 /** DFEN in, the turn's UCI micro-moves out. `[]` = pass (no legal move; the server auto-passes). */
 export function chooseMoves(bot: Bot, dfen: string): string[] {
