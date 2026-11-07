@@ -20,8 +20,20 @@ Deno.test('routing tolerates surrounding slashes and rejects the unknown', () =>
   assertEquals(byRoute('greedy/')?.identity, 'cloudflare/greedy');
   assertEquals(byRoute('/random')?.identity, 'anchor/random');
   assertEquals(byRoute('/aggressive')?.identity, 'anchor/aggressive');
+  assertEquals(byRoute('///greedy///')?.identity, 'cloudflare/greedy');
+  assertEquals(byRoute(''), undefined);
   assertEquals(byRoute('/'), undefined);
+  assertEquals(byRoute('////'), undefined);
+  assertEquals(byRoute('/gre/edy/'), undefined);
   assertEquals(byRoute('/nope'), undefined);
+});
+
+Deno.test('routing handles long slash sequences', () => {
+  const slashes = '/'.repeat(100_000);
+  assertEquals(byRoute(`${slashes}greedy${slashes}`), GREEDY);
+  assertEquals(byRoute(slashes), undefined);
+  assertEquals(byRoute(`${slashes}unknown`), undefined);
+  assertEquals(byRoute(`greedy${slashes}unknown`), undefined);
 });
 
 // The load-bearing test of the merge: greedy must still play exactly as it did on Cloudflare and
