@@ -57,6 +57,8 @@
 
 ## Issue management
 
+<!-- deno-fmt-ignore-start -->
+
 <!-- dc-shared:issue-management v8 — keep identical across Fortemate repositories -->
 
 - Classify work with the native GitHub Issue Type: `Bug` (unexpected or incorrect behavior), `Feature` (request, idea, new user-visible capability), `Task` (a specific piece of engineering, research, maintenance or documentation work). Labels on Issues name a technical domain or cross-cutting concern only, never repeat the Type, and must already exist in the repository.
@@ -66,3 +68,5 @@
 - The human owner reviews, approves and merges pull requests. Agents never merge pull requests or execute releases.
 
 <!-- /dc-shared:issue-management -->
+
+<!-- deno-fmt-ignore-end -->
